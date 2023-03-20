@@ -1,0 +1,18 @@
+name: Recovery
+version: '${project.version}'
+main: com.vincentgonnet.recovery.Recovery
+api-version: 1.19
+authors: [Vincent Gonnet]
+description: Get to your death location the easy way.
+commands:
+  recovery:
+    description: Toggles recovery mode for the command sender.
+    permission: recovery.recover
+permissions:
+  recovery.recover:
+    default: true
+  recovery.auto:
+    default: true
+  recovery.reload:
+    default: op
+
