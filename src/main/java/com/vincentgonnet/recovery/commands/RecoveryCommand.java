@@ -52,6 +52,11 @@ public class RecoveryCommand implements CommandExecutor {
             return true;
         }
 
+        if (player.getLastDeathLocation() == null) {
+            sender.sendMessage(messagesConfig.getConfig().getString("player-has-not-died"));
+            return true;
+        }
+
         player.getInventory().setItemInOffHand(new Compass());
         CompassHandler.getInstance().addRecoveringPlayer(player);
 

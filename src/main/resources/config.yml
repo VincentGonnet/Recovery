@@ -1,0 +1,9 @@
+# amount of in-game ticks between each refresh of the distance indicator
+# ! requires restart to apply
+ticks-between-compass-refresh: 1
+
+# enables the recovery mode and gives the Recovery Compass on respawn
+recover-on-respawn: false
+# if recover-on-respawn enabled, whitelist of worlds where the rule is applied
+recover-on-respawn-worlds:
+  - "world"

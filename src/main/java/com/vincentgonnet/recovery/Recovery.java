@@ -3,11 +3,14 @@ package com.vincentgonnet.recovery;
 import com.vincentgonnet.recovery.commands.RecoveryCommand;
 import com.vincentgonnet.recovery.commands.RecoveryTabCompleter;
 import com.vincentgonnet.recovery.handlers.CompassHandler;
+import com.vincentgonnet.recovery.items.Compass;
 import com.vincentgonnet.recovery.util.ConfigUtil;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -70,6 +73,12 @@ public final class Recovery extends JavaPlugin {
             messagesConfig.getConfig().set("plugin-reloaded", "§8[§1§lRecovery§r§8] §ePlugin reloaded.");
             messagesConfig.save();
         }
+        // Init : player-has-not-died
+        if (messagesConfig.getConfig().get("player-has-not-died") == null || !(mainConfig.getConfig().get("player-has-not-died") instanceof String)) {
+            messagesConfig.getConfig().set("player-has-not-died", "§cCongrats ! You haven't died yet, hence you cannot get the Recovery Compass.");
+            messagesConfig.save();
+        }
+
     }
 
     @Override
@@ -90,8 +99,18 @@ public final class Recovery extends JavaPlugin {
         CompassHandler.getInstance(this);
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            for (Player player : CompassHandler.getInstance().getRecoveringPlayers()) {
+            for (int i = 0 ; i < CompassHandler.getInstance().getRecoveringPlayers().size(); i++) {
+                Player player = CompassHandler.getInstance().getRecoveringPlayers().get(i);
                 double distance = player.getLastDeathLocation().distance(player.getLocation());
+                if (distance < 2) {
+                    i--;
+                    CompassHandler.getInstance().removeRecoveringPlayer(player);
+                    if (player.getInventory().getItemInOffHand().getItemMeta() == null || player.getInventory().getItemInOffHand().getItemMeta().getDisplayName() == null) return;
+                    if (player.getInventory().getItemInOffHand().getItemMeta().getDisplayName().equals(new Compass().getItemMeta().getDisplayName())) {
+                        player.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
+                    }
+                    continue;
+                }
                 String formattedDistance = String.format(messagesConfig.getConfig().get("distance-from-deathpoint").toString().replace("%distance%", "%.0f"), distance);
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(formattedDistance));
             }

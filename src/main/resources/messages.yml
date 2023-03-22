@@ -1,0 +1,14 @@
+# Use this file to modify the in-game messages.
+# Use '/recovery reload' to apply the changes
+
+distance-from-deathpoint: "§6Your deathpoint is %distance% blocks away."
+
+command-wrong-usage: "§cWrong usage : please run '%command%' instead"
+
+command-offhand-not-empty: "§cPlease be sure your offhand is empty before running this command."
+
+command-no-permission: "§cYou do not have permission to run this command."
+
+plugin-reloaded: "§8[§1§lRecovery§r§8] §ePlugin reloaded."
+
+player-has-not-died: "§cCongrats ! You haven't died yet, hence you cannot get the Recovery Compass."

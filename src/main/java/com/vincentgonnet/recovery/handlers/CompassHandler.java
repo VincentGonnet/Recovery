@@ -20,7 +20,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CompassHandler implements Listener {
 
@@ -112,6 +111,7 @@ public class CompassHandler implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerRespawn(PlayerRespawnEvent event) {
+        if (event.getPlayer().getLastDeathLocation() == null) return;
         if (Recovery.getMainConfig().getConfig().get("recover-on-respawn").equals(false) || !event.getPlayer().hasPermission("recovery.auto")) return;
         if (!Recovery.getMainConfig().getConfig().getStringList("recover-on-respawn-worlds").contains(event.getPlayer().getWorld().getName())) return;
         event.getPlayer().getInventory().setItemInOffHand(new Compass());
