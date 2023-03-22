@@ -6,6 +6,10 @@ Use /recovery to get the compass in your offhand. The compass tells you how far 
 
 The compass gets deleted if a player tries to move if from offhand, disconnects or dies. (only in survival / adventure mode)
 
+### Compatibilities
+
+Recovery is a Spigot plugin. It will work with both Spigot and PaperMC.
+
 ### Features
 ◽ A one time use recovery compass on demand
 
